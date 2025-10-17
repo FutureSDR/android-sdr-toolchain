@@ -1,0 +1,12 @@
+[submodule "libusb"]
+	path = libusb
+	url = https://github.com/libusb/libusb.git
+[submodule "SoapySDR"]
+	path = SoapySDR
+	url = https://github.com/pothosware/SoapySDR.git
+[submodule "rtl-sdr"]
+	path = rtl-sdr
+	url = https://github.com/bastibl/rtl-sdr.git
+[submodule "SoapyRTLSDR"]
+	path = SoapyRTLSDR
+	url = https://github.com/bastibl/SoapyRTLSDR.git
