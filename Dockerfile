@@ -78,6 +78,7 @@ COPY --from=build /home/${USERNAME}/toolchain/arm64-v8a/lib/libusb1.0.so /out/ar
 COPY --from=build /home/${USERNAME}/toolchain/arm64-v8a/lib/librtlsdr.so /out/arm64-v8a/lib/
 COPY --from=build /home/${USERNAME}/toolchain/arm64-v8a/lib/libSoapySDR.so /out/arm64-v8a/lib/
 COPY --from=build /home/${USERNAME}/toolchain/arm64-v8a/lib/SoapySDR/modules0.8-3/librtlsdrSupport.so /out/arm64-v8a/lib/
+COPY --from=build /home/${USERNAME}/toolchain/arm64-v8a/include/ /out/arm64-v8a/include/
 COPY --from=build /home/${USERNAME}/Android/Sdk/ndk/${NDK_VERSION}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so /out/arm64-v8a/lib/
 COPY --from=build /home/${USERNAME}/toolchain/jni/ /out/jni/
 
