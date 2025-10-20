@@ -10,3 +10,6 @@
 [submodule "SoapyRTLSDR"]
 	path = SoapyRTLSDR
 	url = https://github.com/bastibl/SoapyRTLSDR.git
+[submodule "hackrf"]
+	path = hackrf
+	url = https://github.com/bastibl/hackrf.git

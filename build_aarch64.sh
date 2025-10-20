@@ -38,11 +38,44 @@ cd ${BUILD_ROOT}/libusb/android/jni
 git clean -xdf
 
 export NDK=${TOOLCHAIN_ROOT}
-${NDK}/ndk-build clean APP_ABI=arm64-v8a APP_PLATFORM=android-${API_LEVEL}
-${NDK}/ndk-build -B -r -R APP_ABI=arm64-v8a APP_PLATFORM=android-${API_LEVEL}
+export APP_MK=${BUILD_ROOT}/libusb/android/jni/Application.mk
+export LIBUSB_MK=${BUILD_ROOT}/libusb/android/jni/libusb.mk
 
-cp ${BUILD_ROOT}/libusb/android/libs/arm64-v8a/libusb1.0.so ${PREFIX}/lib
+${NDK}/ndk-build clean APP_ABI=arm64-v8a \
+  APP_PLATFORM=android-${API_LEVEL} \
+  NDK_APPLICATION_MK=${APP_MK} \
+  APP_BUILD_SCRIPT=${LIBUSB_MK} \
+  USE_PC_NAME=1
+${NDK}/ndk-build -B -r -R APP_ABI=arm64-v8a \
+  APP_PLATFORM=android-${API_LEVEL} \
+  NDK_APPLICATION_MK=${APP_MK} \
+  APP_BUILD_SCRIPT=${LIBUSB_MK} \
+  USE_PC_NAME=1
+
+cp ${BUILD_ROOT}/libusb/android/libs/arm64-v8a/libusb-1.0.so ${PREFIX}/lib
 cp ${BUILD_ROOT}/libusb/libusb/libusb.h ${PREFIX}/include
+
+#############################################################
+### HACK RF
+#############################################################
+cd ${BUILD_ROOT}/hackrf/host/
+git clean -xdf
+
+mkdir build
+cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+  -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_ROOT}/build/cmake/android.toolchain.cmake \
+  -DANDROID_ABI=arm64-v8a \
+  -DANDROID_ARM_NEON=ON \
+  -DANDROID_NATIVE_API_LEVEL=${API_LEVEL} \
+  -DANDROID_STL=c++_shared \
+  -DENABLE_STATIC_LIB=OFF \
+  -DCMAKE_FIND_ROOT_PATH=${PREFIX} \
+  ../
+
+make -j ${NCORES}
+make install
 
 #############################################################
 ### RTL SDR
