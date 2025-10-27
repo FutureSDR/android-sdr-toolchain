@@ -13,3 +13,6 @@
 [submodule "hackrf"]
 	path = hackrf
 	url = https://github.com/bastibl/hackrf.git
+[submodule "SoapyHackRF"]
+	path = SoapyHackRF
+	url = https://github.com/bastibl/SoapyHackRF.git
