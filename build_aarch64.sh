@@ -58,6 +58,28 @@ cp ${BUILD_ROOT}/libusb/android/libs/arm64-v8a/libusb-1.0.so ${PREFIX}/lib
 cp ${BUILD_ROOT}/libusb/libusb/libusb.h ${PREFIX}/include
 
 #############################################################
+### HYDRASDR
+#############################################################
+cd ${BUILD_ROOT}/rfone_host/
+git clean -xdf
+
+mkdir build
+cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+  -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_ROOT}/build/cmake/android.toolchain.cmake \
+  -DANDROID_ABI=arm64-v8a \
+  -DANDROID_ARM_NEON=ON \
+  -DANDROID_NATIVE_API_LEVEL=${API_LEVEL} \
+  -DANDROID_STL=c++_shared \
+  -DENABLE_STATIC_LIB=OFF \
+  -DCMAKE_FIND_ROOT_PATH=${PREFIX} \
+  ../
+
+make -j ${NCORES}
+make install
+
+#############################################################
 ### HACK RF
 #############################################################
 cd ${BUILD_ROOT}/hackrf/host/
@@ -124,6 +146,29 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
 
 make -j ${NCORES}
 make install
+
+#############################################################
+### SOAPY HYDRASDR
+#############################################################
+cd ${BUILD_ROOT}/SoapyHydraSDR
+git clean -xdf
+
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+  -DSOAPY_SDR_MODULE_DIR=${PREFIX}/lib \
+  -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_ROOT}/build/cmake/android.toolchain.cmake \
+  -DANDROID_ABI=arm64-v8a \
+  -DANDROID_ARM_NEON=ON \
+  -DANDROID_NATIVE_API_LEVEL=${API_LEVEL} \
+  -DANDROID_STL=c++_shared \
+  -DCMAKE_FIND_ROOT_PATH=${PREFIX} \
+  ../
+
+make -j ${NCORES}
+make install
+
+# ln -s ${PREFIX}/lib/SoapySDR/modules0.8-3/librtlsdrSupport.so ${PREFIX}/lib/ || true
 
 #############################################################
 ### SOAPY RTL-SDR

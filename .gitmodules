@@ -16,3 +16,9 @@
 [submodule "SoapyHackRF"]
 	path = SoapyHackRF
 	url = https://github.com/bastibl/SoapyHackRF.git
+[submodule "rfone_host"]
+	path = rfone_host
+	url = https://github.com/hydrasdr/rfone_host.git
+[submodule "SoapyHydraSDR"]
+	path = SoapyHydraSDR
+	url = https://github.com/bastibl/SoapyHydraSDR.git
